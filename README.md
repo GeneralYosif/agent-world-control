@@ -4,8 +4,12 @@ Keepalived, Corosync and Pacemaker, and Redis message exchange.
 
 ## Run
 git clone https://github.com/GeneralYosif/agent-world-control.git
+cd agent-world-control
 vagrant up
 vagrant ssh
+sudo systemctl enable docker
+sudo systemctl start docker
+cd /vagrant
 docker compose up --build
 
 
