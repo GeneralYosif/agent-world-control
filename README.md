@@ -12,4 +12,4 @@ docker compose up --build
 ## Access
 https://192.168.56.10 - application
 http://192.168.56.10:19999/ - netdata
-https://github.com/GeneralYosif/agent-world-control.git - GitHub repository
+https://github.com/GeneralYosif/agent-world-control - GitHub repository
