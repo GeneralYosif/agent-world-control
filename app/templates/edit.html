@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Edit Agent</title>
+</head>
+<body>
+<h1>Edit Agent</h1>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<form action="" method="post">
+    <label>Real Name: <input type="text" name="real_name" value="{{ agent[1] }}" required></label><br>
+    <label>Codename: <input type="text" name="codename" value="{{ agent[2] }}" required></label><br>
+    <label>Gender: <input type="text" name="gender" value="{{ agent[3] }}"></label><br>
+    <label>Birth Country: <input type="text" name="country_of_birth" value="{{ agent[4] }}"></label><br>
+    <label>Current Country: <input type="text" name="current_country" value="{{ agent[5] }}"></label><br>
+    <label>Influence Level: <input type="number" name="influence_level" value="{{ agent[6] }}"></label><br>
+    <label>Primary Objective: <input type="text" name="primary_objective" value="{{ agent[7] }}"></label><br>
+    <label>Current Status: <input type="text" name="current_status" value="{{ agent[8] }}"></label><br>
+    <label>Alive: <input type="checkbox" name="is_alive" {% if agent[9] %}checked{% endif %}></label><br>
+    <label>Death Cause: <input type="text" name="death_cause" value="{{ agent[10] }}"></label><br><br>
+    <button type="submit">Save Changes</button>
+</form>
+
+<a href="/">Back to list</a>
+</body>
+</html>

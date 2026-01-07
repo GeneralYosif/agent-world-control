@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Agent</title>
+</head>
+<body>
+<h1>Add New Agent</h1>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<form action="/add" method="post">
+    <label>Real Name: <input type="text" name="real_name" required maxlength="255"></label><br>
+    <label>Codename: <input type="text" name="codename" required maxlength="255"></label><br>
+    <label>Gender: <input type="text" name="gender"></label><br>
+    <label>Birth Country: <input type="text" name="country_of_birth" maxlength="255"></label><br>
+    <label>Current Country: <input type="text" name="current_country" maxlength="255"></label><br>
+    <label>Influence Level: <input type="number" name="influence_level"></label><br>
+    <label>Primary Objective: <input type="text" name="primary_objective"></label><br>
+    <label>Current Status: <input type="text" name="current_status" maxlength="255"></label><br>
+    <label>Alive: <input type="checkbox" name="is_alive" checked></label><br>
+    <label>Death Cause: <input type="text" name="death_cause"></label><br><br>
+    <button type="submit">Add Agent</button>
+</form>
+
+<a href="/">Back to list</a>
+
+<!-- JavaScript за асинхронно изпращане на формата чрез Fetch API, блок за AJAX -->
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+    const form = document.querySelector("form");
+    
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault(); // спира стандартното изпращане на формата
+
+        // Събираме данните от формата
+        const data = {
+            real_name: form.real_name.value,
+            codename: form.codename.value,
+            gender: form.gender.value,
+            country_of_birth: form.country_of_birth.value,
+            current_country: form.current_country.value,
+            influence_level: parseInt(form.influence_level.value || 0),
+            primary_objective: form.primary_objective.value,
+            current_status: form.current_status.value,
+            is_alive: form.is_alive.checked,
+            death_cause: form.death_cause.value || null
+        };
+
+        try {
+            const resp = await fetch("/api/agents", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(data)
+            });
+
+            const result = await resp.json();
+
+            if (resp.status === 201) {
+                alert("Agent added successfully!");
+                form.reset(); // изчиства формата
+            } else {
+                alert("Error: " + result.message);
+            }
+
+        } catch (err) {
+            console.error("Fetch error:", err);
+            alert("Network error");
+        }
+    });
+});
+</script>
+</body>
+</html>

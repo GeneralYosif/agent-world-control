@@ -1,0 +1,86 @@
+# docker compose
+services:
+  db:
+    image: postgres:14
+    restart: always  # ← добавено за стабилност
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    ports:
+      - "5440:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+     test: ["CMD-SHELL", "pg_isready -U Ioizef_Mengeme -d agents_db"]
+     interval: 5s
+     timeout: 5s
+     retries: 5
+
+# web приложение
+  web:
+    build: .
+    container_name: agent_web
+    ports:
+      - "5001:5000"
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always #стабилност
+
+# Nginx сървър
+  nginx:
+    image: nginx:latest
+    container_name: agent_nginx
+    ports:
+      - "8080:80"    # HTTP
+      - "443:443"    # HTTPS
+    volumes:
+      - ./ssl:/etc/nginx/ssl:ro # монтира се ssl папката
+      - ./nginx/default.conf:/etc/nginx/conf.d/default.conf # конфигурация на nginx
+    depends_on:
+      - web
+  
+# Мониторинг с Netdata
+  netdata:
+    image: netdata/netdata:latest
+    container_name: netdata
+    ports:
+      - "19999:19999"
+    cap_add:
+      - SYS_PTRACE
+    security_opt:
+      - apparmor:unconfined
+    restart: always
+    volumes:
+      - netdataconfig:/etc/netdata
+      - netdatalib:/var/lib/netdata
+      - netdatacache:/var/cache/netdata
+      - /etc/passwd:/host/etc/passwd:ro
+      - /etc/group:/host/etc/group:ro
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+
+# Redis сървър за съобщения в приложението
+  redis:
+    image: redis:7
+    container_name: agent_redis
+    restart: always
+
+# Фонов worker процес за обработка на съобщения
+  worker:
+    build: .
+    container_name: agent_worker
+    command: python -u worker.py
+    working_dir: /app
+    depends_on:
+      - redis
+    restart: always
+
+
+# Допълнителни томове за да работят правилно функциите на Netdata и Postgres
+volumes:
+  pgdata:
+  db_data:
+  netdataconfig:
+  netdatalib:
+  netdatacache:

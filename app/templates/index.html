@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="bg">
+<head>
+    <meta charset="UTF-8">
+    <title>Agents Control</title>
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 100%;
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 6px;
+            text-align: left;
+        }
+        th {
+            background-color: #eee;
+        }
+    </style>
+</head>
+<body>
+
+<!-- линк към формата за добавяне на нов агент -->   
+<a href="/add">Add New Agent</a><br><br>
+
+
+<h1>Agents Database</h1>
+
+{% if agents %}
+<table>
+    <tr>
+        <th>ID</th>
+        <th>Real Name</th>
+        <th>Codename</th>
+        <th>Gender</th>
+        <th>Birth Country</th>
+        <th>Current Country</th>
+        <th>Influence</th>
+        <th>Primary Objective</th>
+        <th>Status</th>
+        <th>Alive</th>
+        <th>Death Cause</th>
+        <th>Functions</th>
+    </tr>
+
+    {% for a in agents %}
+    <tr>
+        <td>{{ a[0] }}</td>
+        <td>{{ a[1] }}</td>
+        <td>{{ a[2] }}</td>
+        <td>{{ a[3] }}</td>
+        <td>{{ a[4] }}</td>
+        <td>{{ a[5] }}</td>
+        <td>{{ a[6] }}</td>
+        <td>{{ a[7] }}</td>
+        <td>{{ a[8] }}</td>
+        <td>{{ "YES" if a[9] else "NO" }}</td>
+        <td>{{ a[10] or '' }}</td>
+        <td>
+    <a href="/edit/{{ a[0] }}">Edit</a> |
+    <a href="/delete/{{ a[0] }}" onclick="return confirm('Are you sure?');">Delete</a></td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No agents found.</p>
+{% endif %}
+
+</body>
+</html>
