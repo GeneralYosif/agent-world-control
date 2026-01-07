@@ -23,6 +23,10 @@ services:
     container_name: agent_web
     ports:
       - "5001:5000"
+    volumes:
+    - ./app:/app
+    - ./app/static:/app/static
+    - ./app/templates:/app/templates
     depends_on:
       db:
         condition: service_healthy

@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Agents Control</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <style>
         table {
             border-collapse: collapse;
@@ -21,7 +22,7 @@
 <body>
 
 <!-- линк към формата за добавяне на нов агент -->   
-<a href="/add">Add New Agent</a><br><br>
+<a href="/add" class="add-agent-btn">Add New Agent</a><br><br>
 
 
 <h1>Agents Database</h1>
