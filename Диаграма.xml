@@ -1,0 +1,67 @@
+<mxfile host="app.diagrams.net" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/143.0.0.0 Safari/537.36" version="29.2.10">
+  <diagram name="Agent World Control Final" id="final-diagram">
+    <mxGraphModel dx="868" dy="473" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="user" parent="1" style="ellipse;fillColor=#FFD966;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="User / Browser" vertex="1">
+          <mxGeometry height="80" width="160" x="10" y="10" as="geometry" />
+        </mxCell>
+        <mxCell id="vm" parent="1" style="shape=umlFrame;fillColor=#F0F0F0;strokeColor=#000000;fontSize=12;fontColor=#000000;whiteSpace=wrap;html=1;width=170;height=70;" value="Virtual Machine (Vagrant) + Docker Compose" vertex="1">
+          <mxGeometry height="400" width="600" x="20" y="120" as="geometry" />
+        </mxCell>
+        <mxCell id="nginx" parent="vm" style="rounded=1;fillColor=#B6D7A8;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="Nginx\n(agent_nginx)" vertex="1">
+          <mxGeometry height="60" width="140" x="220" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="flask" parent="vm" style="rounded=1;fillColor=#A4C2F4;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="Flask App\n(agent_web)" vertex="1">
+          <mxGeometry height="60" width="140" x="220" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="postgres" parent="vm" style="rounded=1;fillColor=#FFE599;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="PostgreSQL 14\n(db)" vertex="1">
+          <mxGeometry height="60" width="140" x="40" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="worker" parent="vm" style="rounded=1;fillColor=#C9DAF8;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="Worker\n(agent_worker)" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="110" as="geometry" />
+        </mxCell>
+        <mxCell id="redis" parent="vm" style="rounded=1;fillColor=#F9CB9C;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="Redis\n(message broker)" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="netdata" parent="vm" style="rounded=1;fillColor=#F4CCCC;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="Netdata\n(monitoring)" vertex="1">
+          <mxGeometry height="60" width="140" x="220" y="200" as="geometry" />
+        </mxCell>
+        <mxCell id="vip" parent="vm" style="rounded=1;fillColor=#D9EAD3;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="VIP / Pacemaker" vertex="1">
+          <mxGeometry height="60" width="140" x="220" y="-60" as="geometry" />
+        </mxCell>
+        <mxCell id="tWfu5sFD3AIUj3ju0quk-1" parent="vm" style="rounded=1;fillColor=#B6D7A8;strokeColor=#000000;fontSize=12;fontColor=#000000;" value="SSL self-signed" vertex="1">
+          <mxGeometry height="60" width="140" x="400" y="20" as="geometry" />
+        </mxCell>
+        <mxCell id="tWfu5sFD3AIUj3ju0quk-5" edge="1" parent="vm" source="nginx" style="endArrow=none;html=1;rounded=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" target="tWfu5sFD3AIUj3ju0quk-1" value="">
+          <mxGeometry height="50" relative="1" width="50" as="geometry">
+            <mxPoint x="360" y="60" as="sourcePoint" />
+            <mxPoint x="410" y="10" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="e1" edge="1" parent="1" source="user" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="vip">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e2" edge="1" parent="1" source="vip" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="nginx">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e3" edge="1" parent="1" source="nginx" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="flask">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e4" edge="1" parent="1" source="flask" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="postgres">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e5" edge="1" parent="1" source="flask" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="worker">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e6" edge="1" parent="1" source="worker" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="redis">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="e7" edge="1" parent="1" source="netdata" style="edgeStyle=orthogonalEdgeStyle;rounded=0;strokeColor=#000000;endArrow=block;" target="flask">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

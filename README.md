@@ -1,18 +1,15 @@
 # Agent World Control
-
-## Overview
-Microservice-based system for managing agents, built with Flask, PostgreSQL, Redis, Nginx and Docker.
-
-## Architecture
-- Flask API – main application
-- PostgreSQL – persistent storage
-- Redis – message broker (pub/sub)
-- Worker – background message processor
-- Nginx – reverse proxy + SSL
-- Netdata – monitoring
+Educational project for agent management using Flask, PostgreSQL, Docker, Nginx with SSL and Vagrant.
+Keepalived, Corosync and Pacemaker, and Redis message exchange.
 
 ## Run
+git clone https://github.com/GeneralYosif/agent-world-control.git
+vagrant up
+vagrant ssh
 docker compose up --build
 
-## Messaging
-When a new agent is created, an event is published to Redis and processed asynchronously by a worker service.
+
+## Access
+https://192.168.56.10 - application
+http://192.168.56.10:19999/ - netdata
+https://github.com/GeneralYosif/agent-world-control.git - GitHub repository
